@@ -1,6 +1,7 @@
 import React from "react";
-import './style.css'
-const Index = ({ onGetStarted }) => (
+import './style.css';
+
+const Index = ({ onGetStarted, onGoToLive }) => (
   <>
     <header>
       <h1>AutoNote</h1>
@@ -14,7 +15,11 @@ const Index = ({ onGetStarted }) => (
     <section className="hero">
       <h2>Transform Your Meetings into Notes</h2>
       <p>Upload or record your sessions and get AI-generated notes instantly.</p>
-      <button className="btn-primary" onClick={onGetStarted}>Get Started</button>
+      
+      <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
+        <button className="btn-primary" onClick={onGetStarted}>Get Started</button>
+        <button className="btn-secondary" onClick={onGoToLive}>Live Session</button>
+      </div>
     </section>
   </>
 );

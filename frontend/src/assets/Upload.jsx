@@ -1,6 +1,6 @@
 import React from "react";
 
-const Upload = ({ onContinueToNotes }) => (
+const Upload = ({ onContinueToNotes, onRecordLive }) => (  // 🆕 Added onRecordLive
   <>
     <header>
       <h1>AutoNote</h1>
@@ -25,6 +25,11 @@ const Upload = ({ onContinueToNotes }) => (
       </div>
 
       <button className="btn-secondary" onClick={onContinueToNotes}>Continue to Notes</button>
+
+      <hr style={{ margin: '2rem 0' }} />
+
+      <h3>Or Record a Live Session</h3>
+      <button className="btn-primary" onClick={onRecordLive}>Record Live</button> {/* 🆕 */}
     </section>
   </>
 );
