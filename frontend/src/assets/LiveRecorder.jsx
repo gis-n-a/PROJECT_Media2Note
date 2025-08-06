@@ -5,31 +5,35 @@ function LiveRecorder() {
   const mediaRecorderRef = useRef(null);
   const [recordedChunks, setRecordedChunks] = useState([]);
   const [recording, setRecording] = useState(false);
-  const [error, setError] = useState(null); // Error state for webcam/mic
+  const [error, setError] = useState(null);
 
   const startRecording = async () => {
     try {
+      setError(null); // Reset previous errors
+
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
       videoRef.current.srcObject = stream;
-      mediaRecorderRef.current = new MediaRecorder(stream);
 
-      mediaRecorderRef.current.ondataavailable = event => {
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      mediaRecorderRef.current.ondataavailable = (event) => {
         if (event.data.size > 0) {
-          setRecordedChunks(prev => [...prev, event.data]);
+          setRecordedChunks((prev) => [...prev, event.data]);
         }
       };
 
       mediaRecorderRef.current.start();
       setRecording(true);
     } catch (err) {
-      setError("⚠️ Webcam or Microphone not available."); // Show error
+      console.error("Error accessing media devices:", err);
+      setError("⚠️ Unable to access webcam/microphone. Please check permissions.");
     }
   };
 
   const stopRecording = () => {
     mediaRecorderRef.current.stop();
-    const tracks = videoRef.current.srcObject.getTracks();
-    tracks.forEach(track => track.stop());
+
+    const stream = videoRef.current.srcObject;
+    stream.getTracks().forEach((track) => track.stop());
     setRecording(false);
   };
 
@@ -46,39 +50,26 @@ function LiveRecorder() {
     <div style={{ textAlign: 'center', padding: '2rem' }}>
       <h2>Live Session Recorder</h2>
 
-      {error ? (
-        <>
-          <p style={{ color: 'red' }}>{error}</p>
-          <h4>Sample Preview (Test Mode)</h4>
-          <video
-            src="/sample.mp4"
-            controls
-            width="60%"
-            style={{ border: '1px solid #ccc', borderRadius: '10px', marginBottom: '1rem' }}
-          />
-          <p style={{ fontStyle: 'italic', color: '#555' }}>
-            Since webcam/mic are unavailable, this sample video simulates the preview.
-          </p>
-        </>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      <video
+        ref={videoRef}
+        autoPlay
+        playsInline
+        style={{ width: '60%', borderRadius: '10px', marginBottom: '1rem' }}
+      />
+      <br />
+
+      {!recording ? (
+        <button onClick={startRecording}>Start Recording</button>
       ) : (
-        <>
-          <video
-            ref={videoRef}
-            autoPlay
-            playsInline
-            style={{ width: '60%', marginBottom: '1rem' }}
-          />
-          <br />
-          {!recording ? (
-            <button onClick={startRecording}>Start Recording</button>
-          ) : (
-            <button onClick={stopRecording}>Stop Recording</button>
-          )}
-          <br /><br />
-          {recordedChunks.length > 0 && (
-            <button onClick={downloadRecording}>Download Recording</button>
-          )}
-        </>
+        <button onClick={stopRecording}>Stop Recording</button>
+      )}
+
+      <br /><br />
+
+      {recordedChunks.length > 0 && (
+        <button onClick={downloadRecording}>Download Recording</button>
       )}
     </div>
   );

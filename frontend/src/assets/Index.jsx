@@ -4,7 +4,7 @@ import './style.css';
 const Index = ({ onGetStarted, onGoToLive }) => (
   <>
     <header>
-      <h1>AutoNote</h1>
+      <h1>Media2Note</h1>
       <nav>
         <a href="index.html">Home</a>
         <a href="upload.html">Upload</a>
