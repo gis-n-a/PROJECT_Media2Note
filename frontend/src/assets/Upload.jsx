@@ -30,6 +30,10 @@ const Upload = ({ onContinueToNotes, onRecordLive }) => (  // 🆕 Added onRecor
 
       <h3>Or Record a Live Session</h3>
       <button className="btn-primary" onClick={onRecordLive}>Record Live</button> {/* 🆕 */}
+      <div className="nav-buttons">
+        <button onClick={onContinueToNotes}>Continue to Notes</button>
+        <button onClick={onRecordLive}>Record live Session</button>
+      </div>
     </section>
   </>
 );

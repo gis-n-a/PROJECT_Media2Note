@@ -6,6 +6,7 @@ import LiveRecorder from './assets/LiveRecorder'; // 🆕 Add this line
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
+import './assets/style.css';
 
 function App() {
   const [currentView, setCurrentView] = useState('index');

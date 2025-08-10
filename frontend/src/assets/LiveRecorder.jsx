@@ -60,17 +60,61 @@ function LiveRecorder() {
       />
       <br />
 
-      {!recording ? (
-        <button onClick={startRecording}>Start Recording</button>
-      ) : (
-        <button onClick={stopRecording}>Stop Recording</button>
-      )}
+      {/* LiveRecorder.jsx */}
+{!recording ? (
+  <button 
+    onClick={startRecording} 
+    style={{ 
+      backgroundColor: "#007bff", // Blue background
+      color: "white",            // White text
+      padding: "14px 26px",
+      border: "none",
+      borderRadius: "10px",
+      fontSize: "16px",
+      cursor: "pointer"
+    }}
+  >
+    Start Recording
+  </button>
+) : (
+  <button 
+    onClick={stopRecording} 
+    style={{ 
+      backgroundColor: "#dc3545", // Red background
+      color: "white",
+      padding: "14px 26px",
+      border: "none",
+      borderRadius: "10px",
+      fontSize: "16px",
+      cursor: "pointer"
+    }}
+  >
+    Stop Recording
+  </button>
+)}
+
 
       <br /><br />
 
-      {recordedChunks.length > 0 && (
-        <button onClick={downloadRecording}>Download Recording</button>
-      )}
+    {recordedChunks.length > 0 && (
+  <button 
+    onClick={downloadRecording}
+    style={{
+      backgroundColor: "#28a745", // Green background
+      color: "white",             // White text
+      padding: "14px 26px",
+      border: "none",
+      borderRadius: "10px",
+      fontSize: "16px",
+      cursor: "pointer",
+      fontWeight: "bold"
+    }}
+  >
+    Download Recording
+  </button>
+)}
+
+      
     </div>
   );
 }
