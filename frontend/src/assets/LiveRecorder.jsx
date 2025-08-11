@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import './style.css'; // Optional: Add your styles here
 
 function LiveRecorder() {
   const videoRef = useRef(null);
@@ -47,7 +48,7 @@ function LiveRecorder() {
   };
 
   return (
-    <div style={{ textAlign: 'center', padding: '2rem' }}>
+    <div className="page" style={{ textAlign: 'center', padding: '2rem' }}>
       <h2>Live Session Recorder</h2>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -61,6 +62,24 @@ function LiveRecorder() {
       <br />
 
       {/* LiveRecorder.jsx */}
+  
+  <button
+    onClick={() => window.location.href = "/"}
+    style={{
+      backgroundColor: "green",
+      color: "white",
+      padding: "14px 26px",
+      border: "none",
+      borderRadius: "10px",
+      fontSize: "16px",
+      cursor: "pointer"
+    }}
+  >
+    Home
+  </button>
+
+  <br /><br />
+
 {!recording ? (
   <button 
     onClick={startRecording} 
