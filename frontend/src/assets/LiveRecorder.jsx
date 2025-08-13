@@ -6,10 +6,26 @@ function LiveRecorder() {
   const [recordedChunks, setRecordedChunks] = useState([]);
   const [recording, setRecording] = useState(false);
   const [error, setError] = useState(null);
+  const [snapshots, setSnapshots] = useState([]); // Store captured stills
+  const snapshotIntervalRef = useRef(null);
+
+  // Capture a still frame from the webcam
+  const captureSnapshot = () => {
+    if (videoRef.current) {
+      const canvas = document.createElement('canvas');
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+      const imageUrl = canvas.toDataURL('image/png');
+      setSnapshots(prev => [...prev, imageUrl]);
+    }
+  };
 
   const startRecording = async () => {
     try {
       setError(null); // Reset previous errors
+      setSnapshots([]); // Clear old snapshots
 
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
       videoRef.current.srcObject = stream;
@@ -22,6 +38,10 @@ function LiveRecorder() {
       };
 
       mediaRecorderRef.current.start();
+
+      // Start snapshot capture every 5 seconds
+      snapshotIntervalRef.current = setInterval(captureSnapshot, 5000);
+
       setRecording(true);
     } catch (err) {
       console.error("Error accessing media devices:", err);
@@ -30,10 +50,20 @@ function LiveRecorder() {
   };
 
   const stopRecording = () => {
-    mediaRecorderRef.current.stop();
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+    }
 
     const stream = videoRef.current.srcObject;
-    stream.getTracks().forEach((track) => track.stop());
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+    }
+
+    // Stop snapshot capture
+    if (snapshotIntervalRef.current) {
+      clearInterval(snapshotIntervalRef.current);
+    }
+
     setRecording(false);
   };
 
@@ -70,6 +100,22 @@ function LiveRecorder() {
 
       {recordedChunks.length > 0 && (
         <button onClick={downloadRecording}>Download Recording</button>
+      )}
+
+      {snapshots.length > 0 && (
+        <div style={{ marginTop: '2rem' }}>
+          <h3>Captured Stills</h3>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+            {snapshots.map((snap, index) => (
+              <img
+                key={index}
+                src={snap}
+                alt={`Snapshot ${index}`}
+                style={{ width: '150px', margin: '5px', borderRadius: '8px', border: '1px solid #ccc' }}
+              />
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );
