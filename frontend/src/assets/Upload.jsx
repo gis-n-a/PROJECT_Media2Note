@@ -1,7 +1,7 @@
-import React from "react";
+import React from "react"; 
 
-const Upload = ({ onContinueToNotes, onRecordLive }) => (  // 🆕 Added onRecordLive
-  <>
+const Upload = ({ onContinueToNotes, onRecordLive }) => (
+  <div className="page"> {/* Added animation wrapper */}
     <header>
       <h1>Media2Note</h1>
       <nav>
@@ -24,14 +24,18 @@ const Upload = ({ onContinueToNotes, onRecordLive }) => (  // 🆕 Added onRecor
         <button>Import</button>
       </div>
 
-      <button className="btn-secondary" onClick={onContinueToNotes}>Continue to Notes</button>
+      <button className="btn-secondary" onClick={onContinueToNotes}>
+        Continue to Notes
+      </button>
 
       <hr style={{ margin: '2rem 0' }} />
 
       <h3>Or Record a Live Session</h3>
-      <button className="btn-primary" onClick={onRecordLive}>Record Live</button> {/* 🆕 */}
+      <button className="btn-primary" onClick={onRecordLive}>
+        Record Live
+      </button>
     </section>
-  </>
+  </div>
 );
 
 export default Upload;
