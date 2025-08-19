@@ -8,7 +8,6 @@ function LiveRecorder() {
   const [recordedChunks, setRecordedChunks] = useState([]);
   const [recording, setRecording] = useState(false);
   const [error, setError] = useState(null);
-<<<<<<< HEAD
   const [snapshots, setSnapshots] = useState([]);
 
   // Capture a still frame from the webcam
@@ -23,13 +22,10 @@ function LiveRecorder() {
       setSnapshots((prev) => [...prev, imageUrl]);
     }
   };
-=======
->>>>>>> f0d83ae32b75469d7f9de32055d8f2278995d39e
 
   // Start recording and snapshots
   const startRecording = async () => {
     try {
-<<<<<<< HEAD
       setError(null);
       setSnapshots([]); // clear old snapshots
       setRecordedChunks([]); // clear old recordings
@@ -38,9 +34,6 @@ function LiveRecorder() {
         video: true,
         audio: true,
       });
-=======
-      setError(null); // Reset previous errors
->>>>>>> f0d83ae32b75469d7f9de32055d8f2278995d39e
 
       videoRef.current.srcObject = stream;
 
@@ -52,13 +45,10 @@ function LiveRecorder() {
       };
 
       mediaRecorderRef.current.start();
-<<<<<<< HEAD
 
       // take snapshot every 5 seconds
       snapshotIntervalRef.current = setInterval(captureSnapshot, 5000);
 
-=======
->>>>>>> f0d83ae32b75469d7f9de32055d8f2278995d39e
       setRecording(true);
     } catch (err) {
       console.error("Error accessing media devices:", err);
@@ -71,7 +61,6 @@ function LiveRecorder() {
     mediaRecorderRef.current.stop();
 
     const stream = videoRef.current.srcObject;
-<<<<<<< HEAD
     if (stream) {
       stream.getTracks().forEach((track) => track.stop());
     }
@@ -80,9 +69,6 @@ function LiveRecorder() {
       clearInterval(snapshotIntervalRef.current);
     }
 
-=======
-    stream.getTracks().forEach((track) => track.stop());
->>>>>>> f0d83ae32b75469d7f9de32055d8f2278995d39e
     setRecording(false);
   };
 
@@ -109,7 +95,6 @@ function LiveRecorder() {
       />
       <br />
 
-<<<<<<< HEAD
       {!recording ? (
         <button
           onClick={startRecording}
@@ -141,46 +126,10 @@ function LiveRecorder() {
           Stop Recording
         </button>
       )}
-=======
-      {/* LiveRecorder.jsx */}
-{!recording ? (
-  <button 
-    onClick={startRecording} 
-    style={{ 
-      backgroundColor: "#007bff", // Blue background
-      color: "white",            // White text
-      padding: "14px 26px",
-      border: "none",
-      borderRadius: "10px",
-      fontSize: "16px",
-      cursor: "pointer"
-    }}
-  >
-    Start Recording
-  </button>
-) : (
-  <button 
-    onClick={stopRecording} 
-    style={{ 
-      backgroundColor: "#dc3545", // Red background
-      color: "white",
-      padding: "14px 26px",
-      border: "none",
-      borderRadius: "10px",
-      fontSize: "16px",
-      cursor: "pointer"
-    }}
-  >
-    Stop Recording
-  </button>
-)}
-
->>>>>>> f0d83ae32b75469d7f9de32055d8f2278995d39e
 
       <br />
       <br />
 
-<<<<<<< HEAD
       {recordedChunks.length > 0 && (
         <button
           onClick={downloadRecording}
@@ -225,27 +174,6 @@ function LiveRecorder() {
           </div>
         </div>
       )}
-=======
-    {recordedChunks.length > 0 && (
-  <button 
-    onClick={downloadRecording}
-    style={{
-      backgroundColor: "#28a745", // Green background
-      color: "white",             // White text
-      padding: "14px 26px",
-      border: "none",
-      borderRadius: "10px",
-      fontSize: "16px",
-      cursor: "pointer",
-      fontWeight: "bold"
-    }}
-  >
-    Download Recording
-  </button>
-)}
-
-      
->>>>>>> f0d83ae32b75469d7f9de32055d8f2278995d39e
     </div>
   );
 }
